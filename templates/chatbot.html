@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Insurance AI Chatbot</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:Segoe UI;
+}
+
+.chat-container{
+width:420px;
+height:600px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(12px);
+border-radius:20px;
+display:flex;
+flex-direction:column;
+box-shadow:0 0 30px rgba(0,0,0,.5);
+overflow:hidden;
+}
+
+.header{
+padding:15px;
+text-align:center;
+font-weight:bold;
+color:white;
+border-bottom:1px solid rgba(255,255,255,.2);
+}
+
+.chat-body{
+flex:1;
+padding:15px;
+overflow-y:auto;
+}
+
+.msg{
+margin-bottom:12px;
+animation:fade .4s ease;
+}
+
+.user{
+text-align:right;
+}
+
+.user span{
+background:#00ffb3;
+color:black;
+padding:8px 12px;
+border-radius:15px 15px 0 15px;
+display:inline-block;
+max-width:80%;
+}
+
+.bot span{
+background:white;
+color:black;
+padding:8px 12px;
+border-radius:15px 15px 15px 0;
+display:inline-block;
+max-width:80%;
+}
+
+.footer{
+padding:10px;
+display:flex;
+gap:8px;
+border-top:1px solid rgba(255,255,255,.2);
+}
+
+.footer input{
+flex:1;
+border:none;
+border-radius:10px;
+padding:8px;
+outline:none;
+}
+
+.footer button{
+border:none;
+background:#00ffb3;
+border-radius:10px;
+padding:8px 15px;
+font-weight:bold;
+}
+
+.typing{
+font-style:italic;
+opacity:.7;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1}
+}
+
+small{
+font-size:10px;
+opacity:.6;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="chat-container">
+
+<div class="header">
+Insurance Awareness Chatbot
+<br><small>Powered by ScaleDown</small>
+</div>
+
+<div id="chat" class="chat-body">
+
+<div class="msg bot">
+<span>Hello 👋 Ask me about insurance!</span>
+</div>
+
+</div>
+
+<div class="footer">
+<input id="msg" placeholder="Type your question..." onkeypress="enter(event)">
+<button onclick="send()">Send</button>
+</div>
+
+</div>
+
+<script>
+
+const chat = document.getElementById("chat");
+
+function time(){
+return new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+}
+
+function enter(e){
+if(e.key==="Enter") send();
+}
+
+function send(){
+
+let text=document.getElementById("msg").value.trim();
+if(!text) return;
+
+chat.innerHTML+=`
+<div class="msg user">
+<span>${text}<br><small>${time()}</small></span>
+</div>`;
+
+document.getElementById("msg").value="";
+chat.scrollTop=chat.scrollHeight;
+
+chat.innerHTML+=`
+<div id="typing" class="msg bot typing">
+<span>Bot is typing...</span>
+</div>`;
+
+fetch("/chat",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({message:text})
+})
+.then(r=>r.json())
+.then(d=>{
+
+document.getElementById("typing").remove();
+
+chat.innerHTML+=`
+<div class="msg bot">
+<span>${d.reply}<br><small>${time()}</small></span>
+</div>`;
+
+chat.scrollTop=chat.scrollHeight;
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
