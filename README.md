@@ -90,7 +90,8 @@ InsuranceBot/
 │ └── chatbot.html
 │
 └── static/
-└── style.css~~~
+└── style.css
+~~~
 
 
 
