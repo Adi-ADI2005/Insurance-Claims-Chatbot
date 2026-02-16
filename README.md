@@ -115,6 +115,7 @@ pip install -r requirements.txt
 👨‍💻 Author
 
 Aditya Mishra
+
 AI & Python Developer
 
 ⭐ Support
