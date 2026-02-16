@@ -98,7 +98,7 @@ InsuranceBot/
 
 ### 1️⃣ Clone Repository
 
-```bash
+~~~bash
 git clone https://github.com/your-username/InsuranceBot.git
 cd InsuranceBot
 reate Virtual Environment (Recommended)
@@ -107,6 +107,11 @@ python -m venv venv
 venv\Scripts\activate
 
 pip install -r requirements.txt
+
+~~~
+
+
+
 👨‍💻 Author
 
 Aditya Mishra
