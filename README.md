@@ -87,10 +87,7 @@ InsuranceBot/
 ├── README.md
 │
 ├── templates/
-│ └── chatbot.html
-│
-└── static/
-└── style.css
+  └── chatbot.html
 ~~~
 
 
